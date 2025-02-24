@@ -32,7 +32,7 @@ app.get("/api/persons", (req, res) => {
 
 app.post("/api/persons", (req, res) => {
   const newNote = {
-    id: Math.floor(Math.random() * 1000000),
+    id: Math.floor(Math.random() * 1000000).toString(),
     ...req.body,
   };
   notes.push(newNote);
