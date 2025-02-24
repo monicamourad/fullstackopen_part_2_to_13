@@ -1,0 +1,19 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "Solving Exercises in https://fullstackopen.com/en/part3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon ./server.js localhost 3001",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Monica Mikhael",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
