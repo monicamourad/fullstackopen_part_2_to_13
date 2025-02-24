@@ -2,7 +2,7 @@ const express = require("express");
 const port = 3001;
 const app = express();
 
-const notes = [
+let notes = [
   [
     {
       id: "1",
@@ -28,7 +28,7 @@ const notes = [
 ];
 
 app.get("/api/persons", (req, res) => {
-  res.json(notes);
+  res.json(notes[0]);
 });
 
 app.get("/api/persons/:id", (req, res) => {
@@ -36,6 +36,17 @@ app.get("/api/persons/:id", (req, res) => {
   const person = notes[0].find((note) => note.id === personId);
   if (person) {
     res.json(person);
+  } else {
+    res.status(404).end();
+  }
+});
+
+app.delete("/api/persons/:id", (req, res) => {
+  const personId = req.params.id;
+  const noteToDelete = notes[0].find((note) => note.id === personId);
+  if (noteToDelete) {
+    notes[0] = notes[0].filter((note) => note.id !== noteToDelete.id);
+    res.json(noteToDelete);
   } else {
     res.status(404).end();
   }
