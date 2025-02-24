@@ -28,11 +28,23 @@ const notes = [
 ];
 
 app.get("/api/persons", (req, res) => {
-  res.send(notes);
+  res.json(notes);
+});
+
+app.get("/api/persons/:id", (req, res) => {
+  const personId = req.params.id;
+  const person = notes[0].find((note) => note.id === personId);
+  if (person) {
+    res.json(person);
+  } else {
+    res.status(404).end();
+  }
 });
 
 app.get("/api/info", (req, res) => {
-  const message = `PhoneBook has info for ${notes[0].length} people \n${Date()}`;
+  const message = `PhoneBook has info for ${
+    notes[0].length
+  } people \n${Date()}`;
   res.set("Content-Type", "text/plain");
   res.send(message);
 });
