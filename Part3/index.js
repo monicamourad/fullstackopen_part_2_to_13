@@ -1,39 +1,47 @@
 const express = require("express");
 const port = 3001;
 const app = express();
+app.use(express.json());
 
 let notes = [
-  [
-    {
-      id: "1",
-      name: "Arto Hellas",
-      number: "040-123456",
-    },
-    {
-      id: "2",
-      name: "Ada Lovelace",
-      number: "39-44-5323523",
-    },
-    {
-      id: "3",
-      name: "Dan Abramov",
-      number: "12-43-234345",
-    },
-    {
-      id: "4",
-      name: "Mary Poppendieck",
-      number: "39-23-6423122",
-    },
-  ],
+  {
+    id: "1",
+    name: "Arto Hellas",
+    number: "040-123456",
+  },
+  {
+    id: "2",
+    name: "Ada Lovelace",
+    number: "39-44-5323523",
+  },
+  {
+    id: "3",
+    name: "Dan Abramov",
+    number: "12-43-234345",
+  },
+  {
+    id: "4",
+    name: "Mary Poppendieck",
+    number: "39-23-6423122",
+  },
 ];
 
 app.get("/api/persons", (req, res) => {
-  res.json(notes[0]);
+  res.json(notes);
+});
+
+app.post("/api/persons", (req, res) => {
+  const newNote = {
+    id: Math.floor(Math.random() * 1000000),
+    ...req.body,
+  };
+  notes.push(newNote);
+  res.json(notes);
 });
 
 app.get("/api/persons/:id", (req, res) => {
   const personId = req.params.id;
-  const person = notes[0].find((note) => note.id === personId);
+  const person = notes.find((note) => note.id === personId);
   if (person) {
     res.json(person);
   } else {
@@ -43,9 +51,9 @@ app.get("/api/persons/:id", (req, res) => {
 
 app.delete("/api/persons/:id", (req, res) => {
   const personId = req.params.id;
-  const noteToDelete = notes[0].find((note) => note.id === personId);
+  const noteToDelete = notes.find((note) => note.id === personId);
   if (noteToDelete) {
-    notes[0] = notes[0].filter((note) => note.id !== noteToDelete.id);
+    notes = notes.filter((note) => note.id !== noteToDelete.id);
     res.json(noteToDelete);
   } else {
     res.status(404).end();
@@ -53,9 +61,7 @@ app.delete("/api/persons/:id", (req, res) => {
 });
 
 app.get("/api/info", (req, res) => {
-  const message = `PhoneBook has info for ${
-    notes[0].length
-  } people \n${Date()}`;
+  const message = `PhoneBook has info for ${notes.length} people \n${Date()}`;
   res.set("Content-Type", "text/plain");
   res.send(message);
 });
