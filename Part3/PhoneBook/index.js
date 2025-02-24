@@ -31,6 +31,17 @@ app.get("/api/persons", (req, res) => {
 });
 
 app.post("/api/persons", (req, res) => {
+  if (!req.body.name) {
+    return res.status(400).json({ error: "name is required" }).end();
+  }
+  if (!req.body.number) {
+    return res.status(400).json({ error: "number is required" }).end();
+  }
+  const doesNameExist = notes.find((note) => note.name === req.body.name);
+  if (doesNameExist) {
+    return res.status(400).json({ error: "name must be unique" }).end();
+  }
+
   const newNote = {
     id: Math.floor(Math.random() * 1000000).toString(),
     ...req.body,
