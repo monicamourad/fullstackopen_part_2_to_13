@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const port = 3001;
 const app = express();
@@ -10,6 +11,7 @@ morgan.token("body", (req) => {
   }
 });
 
+
 app.use(express.json());
 const morganFormat =
   ":method :url :status :res[content-length] - :response-time ms";
@@ -17,6 +19,7 @@ app.use(
   morgan(`${morganFormat} :body`, { skip: (req) => req.method !== "POST" })
 );
 app.use(morgan(`${morganFormat}`, { skip: (req) => req.method === "POST" }));
+app.use(cors());
 
 let notes = [
   {
