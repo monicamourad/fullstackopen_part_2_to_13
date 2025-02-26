@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon ./server.js localhost 3001",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../../../../FullStackOpen/Part2/phonebook && npm run build && cp -r dist '../../../FullStackOpen (pt 2 to 13)/fullstackopen_part_2_to_13/Part3/PhoneBook'",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "author": "Monica Mikhael",
   "license": "MIT",
