@@ -18,6 +18,7 @@ app.use(
 );
 app.use(morgan(`${morganFormat}`, { skip: (req) => req.method === "POST" }));
 app.use(cors());
+app.use(express.static('dist'));
 
 let notes = [
   {
